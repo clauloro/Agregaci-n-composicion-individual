@@ -1,0 +1,26 @@
+La razón por la cual el mensaje "Yang destruido" se muestra después del signo de interrogación 
+es debido a que la función __del__() 
+de la clase Yang es llamada por el recolector de basura de Python cuando el objeto yang es eliminado 
+de la memoria. La eliminación de objetos 
+y la ejecución del recolector de basura no son eventos inmediatos, sino que ocurren en un momento 
+posterior y no se pueden predecir con precisión.
+
+Para que el mensaje "Yang destruido" aparezca antes del signo de interrogación, se puede forzar 
+al recolector de basura a eliminar el objeto yang inmediatamente después de llamar a la función del(yang):
+
+CODIGO
+
+import gc
+
+# ...
+
+del(yang)
+gc.collect()  # forzar la eliminación inmediata de objetos eliminados
+print("?")
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+El método gc.collect() fuerza la eliminación de objetos eliminados que aún no han sido eliminados por el recolector 
+de basura de Python. De esta forma, se puede asegurar que el mensaje "Yang destruido" se imprima antes del signo de interrogación. 
+Sin embargo, es importante tener en cuenta que forzar la recolección de basura puede tener un impacto negativo en el rendimiento del 
+programa y no siempre es necesario o recomendable.
