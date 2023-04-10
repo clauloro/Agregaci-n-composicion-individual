@@ -1,27 +1,35 @@
 class Cristal:
-    def __init__(self, ancho, alto):
-        self.ancho = ancho
-        self.alto = alto
+    def __init__(self, transparencia):
+        self.transparencia = transparencia
 
-    def get_area(self):
-        return self.ancho * self.alto
+    def cambiar_transparencia(self, nueva_transparencia):
+        self.transparencia = nueva_transparencia
+        print(f"La transparencia del cristal ahora es {self.transparencia}.")
+
 
 class Ventana:
-    def __init__(self, ancho, alto):
-        self.cristal = Cristal(ancho, alto)
+    def __init__(self, transparencia):
+        self.cristal = Cristal(transparencia)
 
-    def get_area(self):
-        return self.cristal.get_area()
+    def cambiar_transparencia(self, nueva_transparencia):
+        self.cristal.cambiar_transparencia(nueva_transparencia)
+
 
 class ParedCortina:
-    def __init__(self, ancho, alto):
-        self.cristal = Cristal(ancho, alto)
+    def __init__(self, transparencia, ventanas=[]):
+        self.cristal = Cristal(transparencia)
+        self.ventanas = ventanas
 
-    def get_area(self):
-        return self.cristal.get_area()
-    
-ventana = Ventana(2, 1)
-pared_cortina = ParedCortina(3, 2)
+    def cambiar_transparencia(self, nueva_transparencia):
+        self.cristal.cambiar_transparencia(nueva_transparencia)
+        for ventana in self.ventanas:
+            ventana.cambiar_transparencia(nueva_transparencia)
 
-print("Área de la ventana: ", ventana.get_area())  
-print("Área de la pared cortina: ", pared_cortina.get_area())
+ventana1 = Ventana(50)
+ventana2 = Ventana(70)
+
+pared_cortina = ParedCortina(80, [ventana1, ventana2])
+
+ventana1.cambiar_transparencia(40)
+ventana2.cambiar_transparencia(60)
+pared_cortina.cambiar_transparencia(90)
